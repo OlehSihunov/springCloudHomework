@@ -1,5 +1,6 @@
 package com.intentsg.service.ticket.controller;
 
+import com.intentsg.model.UserDTO;
 import com.intentsg.service.ticket.model.Ticket;
 import com.intentsg.service.ticket.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,10 @@ public class TestController {
 	}
 
 	@GetMapping("/user/{ticketId}")
-	public  ResponseEntity<Object> getTicketById(@PathVariable("ticketId") int ticketId){
+	public  ResponseEntity<UserDTO> getTicketById(@PathVariable("ticketId") int ticketId){
 		ServiceInstance serviceInstance = discoveryClient.getInstances("user-service").get(0);
 		String url = serviceInstance.getUri().toString()+"/users/user/"+ticketService.getTicketById(ticketId).getUserId();
 		RestTemplate restTemplate = new RestTemplate();
-		return  restTemplate.getForEntity(url,Object.class);
+		return  restTemplate.getForEntity(url, UserDTO.class);
 	}
 }

@@ -1,28 +1,12 @@
-package com.intentsg.service.ticket.model;
+package com.intentsg.model;
 
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "tickets")
-@Component
-@Scope("prototype")
-public class Ticket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id" )
+public class TicketDTO {
     private int ticketId;
-    @Column(name = "hall_number")
-    private int hallNumber; // зал в якому буде проводитись вистава
-    @Column(name = "place_number")
-    private int placeNumber; // номер місця
-    @Column(name = "date")
+    private int hallNumber;
+    private int placeNumber;
     private Date date;
-    @Column(name = "user_id")
     private int userId;
 
     public Date getDate() {

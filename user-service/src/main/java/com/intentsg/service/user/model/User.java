@@ -13,11 +13,11 @@ public class User {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int userId;
+    private int userId;
     @Column(name ="first_name")
-    String name;
+    private String name;
     @Column(name = "last_name")
-    String lastName;
+    private String lastName;
 
     public int getUserId() {
         return userId;
