@@ -3,6 +3,7 @@ package com.intentsg.service.user.controller;
 import com.intentsg.service.user.model.User;
 import com.intentsg.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/users")
 public class TestController {
+	@Autowired
+	private  DiscoveryClient discoveryClient;
 	@Autowired
 	private UserService userService;
 	@GetMapping("/test")
@@ -36,9 +39,10 @@ public class TestController {
 
 	@GetMapping("/tickets/{userId}")
 	public ResponseEntity<Object[]> getUserTickets(@PathVariable("userId") int userId) {
+		ServiceInstance serviceInstance = discoveryClient.getInstances("ticket-service").get(0);
+		String url = serviceInstance.getUri().toString()+"/tickets/usertickets/"+userId;
 		RestTemplate restTemplate = new RestTemplate();
-		System.out.println(userId);
-		return   restTemplate.getForEntity("http://localhost:8081/tickets/usertickets/"+userId, Object[].class);
+		return   restTemplate.getForEntity(url, Object[].class);
 	}
 
 
